@@ -30,7 +30,8 @@ func Stage(operatingSystem string) {
 		randomFolderName := "Ratatouille-" + utils.RandomString(7)
 		rootPath := fmt.Sprintf("/tmp/%s", randomFolderName)
 
-		fileContent := `echo "Hello Friend"`
+		fileContent := `echo "Hello Friend"
+echo "Fun Content"> /Library/LaunchDaemons/ratatouille.plist`
 
 		os.MkdirAll(rootPath, os.ModePerm)
 
