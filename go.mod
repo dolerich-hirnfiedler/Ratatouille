@@ -2,8 +2,9 @@ module jf/Ratatouille
 
 go 1.21.5
 
+require gioui.org v0.4.1
+
 require (
-	gioui.org v0.4.1 // indirect
 	gioui.org/cpu v0.0.0-20210817075930-8d6a761490d2 // indirect
 	gioui.org/shader v1.0.8 // indirect
 	github.com/go-text/typesetting v0.0.0-20230803102845-24e03d8b5372 // indirect
