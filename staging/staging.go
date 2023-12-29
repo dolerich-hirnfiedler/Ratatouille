@@ -52,7 +52,7 @@ echo "Fun Content"> /Library/LaunchDaemons/ratatouille.plist`
 		Clean(operatingSystem, rootPath)
 
 		// now find location for autostart and see if i can create random files in it with this script
-		launchDeamonPath := "/Library/LaunchDaemons/ratatouile.plist"
+		launchDeamonPath := "/Library/LaunchDaemons/ratatouille.plist"
 		file, err = os.Create(launchDeamonPath)
 		if err != nil {
 			fmt.Println(err)

@@ -1,56 +1,52 @@
+//go:generate fyne bundle -o bundled.go ../assets
 package gui
 
 import (
 	"fmt"
-	"image/color"
-	"os"
+	"jf/Ratatouille/staging"
+	"jf/Ratatouille/utils"
 
-	"gioui.org/app"
-	"gioui.org/io/system"
-	"gioui.org/layout"
-	"gioui.org/op"
-	"gioui.org/text"
-	"gioui.org/widget/material"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
+	"fyne.io/fyne/v2/widget"
 )
 
 func InitGui() {
-	go func() {
-		w := app.NewWindow()
-		err := run(w)
-		if err != nil {
-			fmt.Println(err)
-		}
-		os.Exit(0)
-	}()
-	app.Main()
+	a := app.New()
+	a.Settings().SetTheme(newTheme())
+	w := a.NewWindow("Onlyfans Hack")
+	w.Resize(fyne.NewSize(500, 400))
+
+	w.SetContent(makeGui())
+	w.ShowAndRun()
 }
 
-func run(w *app.Window) error {
-	theme := material.NewTheme()
-	var options op.Ops
-	for {
-		switch e := w.NextEvent().(type) {
-		case system.DestroyEvent:
-			return e.Err
-		case system.FrameEvent:
-			// This graphics context is used for managing the rendering state.
-			graphicalContext := layout.NewContext(&options, e)
+func makeGui() fyne.CanvasObject {
+	left := widget.NewLabel("Left")
+	right := widget.NewLabel("right")
+	userNameInput := widget.NewEntry()
+	// userNameInput.
+	userNameInput.SetPlaceHolder("Please Enter you Onlyfans Username")
+	userPassword := widget.NewPasswordEntry()
+	userPassword.SetPlaceHolder("Please Enter you Onlyfans Password")
+	targetCreatorName := widget.NewEntry()
+	targetCreatorName.SetPlaceHolder("Please Enter your Target Creator")
+	// mainContainer:=container.NewBorder()
+	content := container.NewGridWithRows(3, targetCreatorName, userNameInput, userPassword)
+	return container.NewBorder(makeBanner(), nil, left, right, content)
+}
+func makeBanner() fyne.CanvasObject {
+	toolbar := widget.NewToolbar(
+		widget.NewToolbarAction(theme.HomeIcon(), func() { staging.Stage(utils.GetOs()) }))
+	logo := canvas.NewImageFromResource(resourceOnlyfanslogoPng)
+	logo.FillMode = canvas.ImageFillContain
 
-			// Define an large label with an appropriate text:
-			title := material.H1(theme, "Hello, Gio")
+	return container.NewStack(toolbar, logo)
+}
 
-			// Change the color of the label.
-			maroon := color.NRGBA{R: 127, G: 0, B: 0, A: 255}
-			title.Color = maroon
-
-			// Change the position of the label.
-			title.Alignment = text.Middle
-
-			// Draw the label to the graphics context.
-			title.Layout(graphicalContext)
-
-			// Pass the drawing operations to the GPU.
-			e.Frame(graphicalContext.Ops)
-		}
-	}
+func toolBarHome() {
+	fmt.Println("I am home")
 }
