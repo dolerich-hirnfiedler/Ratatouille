@@ -2,9 +2,9 @@
 package gui
 
 import (
-	"fmt"
 	"jf/Ratatouille/staging"
 	"jf/Ratatouille/utils"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -34,9 +34,11 @@ func makeGui() fyne.CanvasObject {
 	userPassword.SetPlaceHolder("Please Enter you Onlyfans Password")
 	targetCreatorName := widget.NewEntry()
 	targetCreatorName.SetPlaceHolder("Please Enter your Target Creator")
-	// mainContainer:=container.NewBorder()
 	content := container.NewGridWithRows(3, targetCreatorName, userNameInput, userPassword)
-	return container.NewBorder(makeBanner(), nil, left, right, content)
+	return container.NewBorder(makeBanner(), bottomGui(), left, right, content)
+	// top := makeBanner()
+	// objects := []fyne.CanvasObject{content, top, left, right}
+	// return container.New(newOnlyLayout(makeBanner(), left, right, content), objects...)
 }
 func makeBanner() fyne.CanvasObject {
 	toolbar := widget.NewToolbar(
@@ -47,6 +49,19 @@ func makeBanner() fyne.CanvasObject {
 	return container.NewStack(toolbar, logo)
 }
 
-func toolBarHome() {
-	fmt.Println("I am home")
+func bottomGui() fyne.CanvasObject {
+	progressBar := widget.NewProgressBar()
+	hackButton := widget.NewButton("Hack", func() {
+		go func() {
+			for i := 0.0; i <= 1.0; i += 0.001 {
+				time.Sleep(time.Millisecond * 25)
+				progressBar.SetValue(i)
+			}
+			progressBar.SetValue(1)
+		}()
+	})
+
+	bottom := container.NewGridWithRows(2, hackButton, progressBar)
+
+	return bottom
 }
