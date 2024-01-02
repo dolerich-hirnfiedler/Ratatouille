@@ -1,0 +1,2 @@
+#+title: Readme
+Ratatouille is a small project where I want to learn how to program a R.A.T with the Go programming language.
